@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LOE Builder Pro v19.0 – LOE Generator</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="loe">
+
+  <!-- js/shared.js injects: global-header, toast, app-sidebar, topBtn, modals -->
+
+  <div class="main">
+    <header class="app-header">
+      <div>LOE Generator — Estimation Generator</div>
+      <div class="logo-right" id="headerLogoContainer" aria-hidden="true"></div>
+    </header>
+
+    <div class="content grid-1-2-1">
+      <!-- LEFT PANEL: Selection -->
+      <div class="panel">
+        <h3 style="margin-top:0">LOE Selection</h3>
+
+        <h4 style="margin:0 0 6px 0;font-size:13px;">Search &amp; Filter</h4>
+        <input type="search" id="searchInput" class="search" placeholder="Filter categories, products, tasks…" />
+
+        <h4 style="margin:10px 0 6px 0;font-size:13px;">Select Products</h4>
+        <div id="productCheckboxList" class="product-checkbox-list"></div>
+
+        <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;">
+          <button id="expandAllBtn"       class="btn primary-blue small">Expand All</button>
+          <button id="collapseAllBtn"     class="btn primary-blue small">Collapse All</button>
+          <button id="clearSelectionsBtn" class="btn clear small">Clear All</button>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;">
+          <label for="importFileLoe" class="btn secondary small" style="cursor:pointer;margin:0;">📂 DB Import</label>
+          <input id="importFileLoe" type="file" accept="application/json" style="display:none;">
+          <button id="exportJsonBtn" class="btn secondary small">💾 DB Export</button>
+        </div>
+
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
+          <button id="loadExcelLoeBtn" class="btn secondary small">📊 Load LOE from Excel</button>
+          <input id="loadExcelInput" type="file" accept=".xls,.xlsx" style="display:none;">
+          <div class="hint" style="margin-top:4px;font-size:11px;">Reload a previously exported LOE (.xls) to continue editing.</div>
+        </div>
+
+        <h4 style="margin:14px 0 6px 0;font-size:13px;">Task Hierarchy</h4>
+        <div id="tree" style="margin-top:4px" aria-live="polite"></div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="panel">
+		<h3 style="margin-top:0;margin-bottom:12px;">Selected LOE Details <span id="currentLoeBadge" style="font-size:12px;color:var(--accent);font-weight:normal;float:right;"></span></h3>
+
+        <div class="form-row" style="grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div>
+            <label for="customerName">Customer Name <span style="color:red">*</span></label>
+            <input type="text" id="customerName" placeholder="Enter Client Name">
+          </div>
+          <div>
+            <label for="projectName">Project Name <span style="color:red">*</span></label>
+            <input type="text" id="projectName" placeholder="Enter Project Name">
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-top:10px;border-top:1px solid var(--line);">
+          <label style="font-weight:700;margin-bottom:0;">Risk level:</label>
+          <select id="riskSelect" style="width:auto;height:32px;padding:0 8px;"></select>
+          <div id="riskInfo" class="muted"></div>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+          <button id="exportExcelBtn" class="btn btn-excel">Export to Excel</button>
+          <button id="copyBtn"        class="btn primary-blue">Copy Text</button>
+          <button id="exportTxtBtn"   class="btn secondary">Export TXT</button>
+          <button id="exportCsvBtn"   class="btn secondary">Export CSV</button>
+          <button id="previewBtn"     class="btn secondary">Preview</button>
+        </div>
+
+		<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding-top:14px;border-top:1px solid var(--line);">
+          <button id="saveLoeBtn"   class="btn primary-blue">💾 Save LOE</button>
+          <button id="searchLoeBtn" class="btn secondary">🔍 Open / Search LOEs</button>
+          <button id="finalizeLoeBtn" class="btn secondary" style="margin-left:auto;">🔒 Finalize Version</button>
+        </div>
+        
+		<div id="loeTableContainer"></div>
+      </div>
+    </div>
+
+    <footer class="app-footer" id="appFooter"></footer>
+  </div>
+
+  <!-- LOE-only preview modal -->
+  <div id="previewModal" class="modal">
+    <div class="modal-box">
+      <h2>LOE Preview</h2>
+      <pre id="previewText" style="white-space:pre-wrap;font-size:13px;font-family:monospace;max-height:50vh;overflow-y:auto;"></pre>
+      <div style="text-align:right;margin-top:12px">
+        <button id="closePreview" class="btn ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOE Manager to search / open saved LOEs -->
+  <!--
+  <div id="loeManagerModal" class="modal">
+    <div class="modal-box" style="max-width: 600px; width:100%;">
+      <h2>LOE Manager</h2>
+      <div id="loeListContainer" style="max-height: 400px; overflow-y: auto;"></div>
+      <div style="text-align:right; margin-top:12px">
+        <button id="closeLoeManager" class="btn ghost">Close</button>
+      </div>
+    </div>
+  </div>
+  -->
+  <script src="js/shared.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/loegenerator.js"></script>
+</body>
+</html>

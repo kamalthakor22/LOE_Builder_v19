@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LOE Builder Pro v19.0 – LOE Builder</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="admin">
+
+  <!-- js/shared.js injects: global-header, toast, app-sidebar, topBtn, modals -->
+
+  <div class="main">
+    <header class="app-header">
+      <div>LOE Builder — Task Management</div>
+      <div class="logo-right" id="headerLogoContainer" aria-hidden="true"></div>
+    </header>
+
+    <div class="content grid-1-1-2">
+      <div class="panel">
+        <h3 style="margin-top:0">Add / Edit Task</h3>
+        <div class="form-row">
+          <div>
+            <label for="categorySelect">Category</label>
+            <input id="categorySelect" list="categoryList" placeholder="Type new category or choose existing" autocomplete="off">
+            <datalist id="categoryList"></datalist>
+          </div>
+          <div><button id="clearCategoryBtn" class="btn clear small">Clear</button></div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="productSelect">Product</label>
+            <input id="productSelect" list="productList" placeholder="Type new product or choose existing" autocomplete="off" disabled>
+            <datalist id="productList"></datalist>
+          </div>
+          <div><button id="clearProductBtn" class="btn clear small">Clear</button></div>
+        </div>
+        <div class="full-row">
+          <label for="taskInput">Task</label>
+          <input id="taskInput" type="text" placeholder="Task name">
+        </div>
+        <div class="full-row">
+          <label for="notesInput">Notes (Visible in Exports)</label>
+          <textarea id="notesInput" rows="2" placeholder="Optional notes for this task..."></textarea>
+        </div>
+        <div class="full-row">
+          <label for="daysInput">Days</label>
+          <input id="daysInput" type="number" step="0.1" placeholder="e.g., 1.5">
+        </div>
+        <label style="margin-top:8px"><input id="hasMultiplier" type="checkbox"> Variable multiplier (per host/unit)</label>
+
+        <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+          <button id="saveTaskBtn" class="btn primary-blue">Save Task</button>
+          <button id="clearFormBtn" class="btn ghost">Clear Form</button>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button id="expandAllBtn"   class="btn primary-blue">Expand All</button>
+            <button id="collapseAllBtn" class="btn primary-blue">Collapse All</button>
+          </div>
+        </div>
+
+        <hr style="margin:12px 0">
+        <h4 style="margin:0 0 8px 0">Import / Export LoE Database</h4>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <label for="importFile" class="btn secondary" style="cursor:pointer;margin:0;">📂 DB Import</label>
+          <input id="importFile" type="file" accept="application/json" style="display:none;">
+          <button id="exportBtn" class="btn btn-excel" title="Export LoE Database">💾 DB Export</button>
+          <button id="syncDbBtn" class="btn primary-blue" title="Push current database to server">☁️ Sync to Server</button>
+        </div>
+        <div class="hint" style="margin-top:6px;font-size:11px;">Sync pushes the local database to the server so all users share the same task library.</div>
+      </div>
+
+      <div class="panel">
+        <h3 style="margin-top:0">Task Structure</h3>
+        <div id="tree" aria-live="polite"></div>
+        <div class="note">Click a task name to load it into the form. Use ▲ / ▼ to reorder; trash icon deletes.</div>
+      </div>
+    </div>
+
+    <footer class="app-footer" id="appFooter"></footer>
+  </div>
+
+  <script src="js/shared.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/loebuilder.js"></script>
+</body>
+</html>

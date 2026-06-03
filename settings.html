@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LOE Builder Pro v19.0 – Settings</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="settings">
+
+  <!-- js/shared.js injects: global-header, toast, app-sidebar, topBtn, modals -->
+
+  <div class="main">
+    <header class="app-header">
+      <div>Settings — Global Configurations</div>
+      <div class="logo-right" id="headerLogoContainer" aria-hidden="true"></div>
+    </header>
+
+    <div class="content grid-1-1">
+
+      <!-- Left Column -->
+      <div style="display:flex;flex-direction:column;gap:18px;">
+
+        <div class="panel">
+          <h3 style="margin-top:0">Risk Multipliers</h3>
+          <div class="hint">Configure the risk factors used by LOE Builder. Low should remain 1 (baseline).</div>
+          <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div><label for="lowInput">Low</label><input id="lowInput"  type="number" step="0.01" min="0.01" /></div>
+            <div><label for="medInput">Medium</label><input id="medInput" type="number" step="0.01" min="0.01" /></div>
+            <div><label for="highInput">High</label><input id="highInput" type="number" step="0.01" min="0.01" /></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="saveRiskBtn"  class="btn primary-blue">Save Risk Settings</button>
+            <button id="resetRiskBtn" class="btn ghost">Reset Defaults</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0">User Management</h3>
+          <div class="hint" style="margin-bottom:10px;">
+            Users are stored on the server in <code>server/data/loe_users.json</code>.
+            All changes take effect immediately — no file exports needed.
+          </div>
+
+          <div id="usersList" style="margin-bottom:12px;border:1px solid var(--line);border-radius:6px;padding:8px;min-height:40px;">
+            <div class="muted" style="padding:6px;">Loading users from server…</div>
+          </div>
+
+          <div id="changePasswordSection" style="display:none;background:var(--sidebar-bg);padding:12px;border-radius:6px;margin-bottom:16px;">
+            <h4 style="font-size:13px;margin-top:0;margin-bottom:6px;">
+              Change Password for <span id="changeUsernameDisplay" style="color:var(--accent);"></span>
+            </h4>
+            <div class="form-row" style="grid-template-columns:1fr auto;gap:12px;">
+              <input type="hidden"   id="changeUsername">
+              <input type="password" id="changeNewPassword" placeholder="Enter New Password">
+              <button id="changePassBtn" class="btn primary-blue">Update</button>
+            </div>
+          </div>
+
+          <hr style="margin:16px 0;border:0;border-top:1px solid var(--line);">
+          <h4 style="font-size:13px;margin-bottom:6px;">Add New User</h4>
+          <div class="form-row" style="grid-template-columns:1fr 1fr;gap:12px;">
+            <input type="text"     id="newUsername" placeholder="New Username">
+            <input type="password" id="newPassword" placeholder="New Password">
+          </div>
+          <button id="addUserBtn" class="btn primary-blue" style="margin-top:8px;">Add User</button>
+        </div>
+
+      </div>
+
+      <!-- Right Column -->
+      <div style="display:flex;flex-direction:column;gap:18px;">
+
+        <div class="panel">
+          <h3 style="margin-top:0">LOE Database — Import / Export</h3>
+          <div class="hint">
+            The LOE database is stored on the server at <code>server/data/loe_db.json</code>.
+            It is automatically loaded from the server when any user opens a page.
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap;">
+            <button id="exportBtn"   class="btn btn-excel">💾 Export loe_db.json</button>
+            <label for="importFile" class="btn secondary" style="cursor:pointer;margin:0;">📂 Import &amp; Sync to Server</label>
+            <input id="importFile" type="file" accept="application/json" style="display:none;">
+          </div>
+
+          <hr style="margin:0 0 14px 0;border:0;border-top:1px solid var(--line);">
+          <h4 style="margin-top:0;margin-bottom:6px;font-size:14px;">Keyboard Shortcuts</h4>
+          <ul style="font-size:13px;line-height:1.8;margin-bottom:12px;color:var(--muted);padding-left:18px;">
+            <li><b>Expand All</b>    — <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">E</span></li>
+            <li><b>Collapse All</b>  — <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">C</span></li>
+            <li><b>Scroll to Top</b> — <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">T</span></li>
+          </ul>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);">
+            <button id="sampleBtn" class="btn secondary">Create Sample Data</button>
+            <button id="clearBtn"  class="btn clear">Clear Local Cache</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-top:0">System Audit Log</h3>
+          <div class="hint">
+            All actions are logged server-side in <code>server/data/loe_audit.json</code>.
+            This is a live view — every user's actions appear here in real time.
+          </div>
+          <div style="max-height:300px;overflow-y:auto;border:1px solid var(--line);border-radius:6px;">
+            <table class="audit-table">
+              <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr></thead>
+              <tbody id="auditList"><tr><td colspan="4" class="muted" style="padding:8px;">Loading from server...</td></tr></tbody>
+            </table>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;align-items:center;">
+            <button id="refreshAuditBtn" class="btn secondary small">↻ Refresh</button>
+            <button id="clearAuditBtn"   class="btn clear small" style="margin-left:auto;">Clear Audit Log</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="app-footer" id="appFooter"></footer>
+  </div>
+
+  <script src="js/shared.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

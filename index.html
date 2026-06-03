@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LOE Builder Pro v19.0</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="refresh" content="3; url=loebuilder.html">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .splash { display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 40px);padding:24px; }
+    .splash-card { background:var(--panel-bg);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.12);padding:48px 56px;text-align:center;max-width:480px;width:100%;border:1px solid var(--line); }
+    .version-badge { display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:13px;padding:4px 14px;border-radius:20px;margin:12px 0 20px 0; }
+    .pulse { display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;animation:pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+    .progress-bar { width:100%;height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:20px; }
+    .progress-fill { height:100%;background:var(--accent);border-radius:2px;animation:fill 3s linear forwards; }
+    @keyframes fill { from{width:0} to{width:100%} }
+  </style>
+</head>
+<body data-page="splash">
+  <div class="splash">
+    <div class="splash-card">
+      <div style="font-size:56px;margin-bottom:12px;">🧮</div>
+      <h1 style="margin:0;font-size:26px;font-weight:700;">LOE Builder Pro</h1>
+      <p style="color:var(--muted);margin:6px 0 0 0;font-size:14px;">Enterprise Estimation Engine — Server Edition</p>
+      <div class="version-badge">v19.0 — SQLite Server Build</div>
+
+      <p style="font-size:14px;margin:0 0 8px 0;">Redirecting to LOE Generator...</p>
+      <a href="loegenerator.html" class="btn primary-blue" style="text-decoration:none;padding:0 20px;">Open LOE Generator Now &rarr;</a>
+
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+
+      <div style="margin-top:12px;font-size:12px;color:var(--muted);">
+        <span class="pulse"></span><span id="statusMsg">Connecting to server...</span>
+      </div>
+
+      <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:center;gap:16px;font-size:13px;">
+        <a href="loebuilder.html"      style="color:var(--accent);text-decoration:none;">📋 LOE Builder</a>
+        <a href="loegenerator.html" style="color:var(--accent);text-decoration:none;">🧮 LOE Generator</a>
+        <a href="settings.html"   style="color:var(--accent);text-decoration:none;">⚙️ Settings</a>
+        <a href="login.html"      style="color:var(--accent);text-decoration:none;">🔑 Login</a>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:12px;color:var(--muted);">LOE Builder Pro v19.0 — Teknicor Corporation</p>
+  </div>
+
+  <script>
+  // Minimal server health check before shared.js loads
+  document.addEventListener('DOMContentLoaded', () => {
+      const msg = document.getElementById('statusMsg');
+      fetch('/api/health').then(r => r.ok ? (msg.textContent = 'Server connected. Launching...') : (msg.textContent = 'Server offline — check setup.')).catch(() => { msg.textContent = 'Cannot reach server — see README.'; });
+  });
+  </script>
+</body>
+</html>

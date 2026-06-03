@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>LOE Builder Pro v19.0 – LOE Manager</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="loemanager">
+
+  <div class="main">
+    <header class="app-header">
+      <div>LOE Manager — Search &amp; History</div>
+      <div class="logo-right" id="headerLogoContainer" aria-hidden="true"></div>
+    </header>
+
+    <div class="content">
+      <div class="panel">
+        <h3 style="margin-top:0">Search Saved LOEs</h3>
+        <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; align-items: end;">
+            <div>
+                <label for="searchCustomer">Customer Name</label>
+                <input type="text" id="searchCustomer" placeholder="Filter by customer...">
+            </div>
+            <div>
+                <label for="searchProject">Project Name</label>
+                <input type="text" id="searchProject" placeholder="Filter by project...">
+            </div>
+            <div>
+                <label for="searchStatus">Status</label>
+                <select id="searchStatus">
+                    <option value="">All Versions</option>
+                    <option value="final">Finalized Only</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="border:1px solid var(--line);border-radius:6px;overflow:hidden;">
+            <table class="task-table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Project</th>
+                        <th>Version</th>
+                        <th>Date</th>
+                        <th>Finalized</th>
+                        <th style="text-align:right">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="loeTableBody">
+                    <tr><td colspan="6" class="muted" style="padding:12px;">Loading records from database...</td></tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+    <footer class="app-footer" id="appFooter"></footer>
+  </div>
+
+  <script src="js/shared.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/loemanager.js"></script>
+</body>
+</html>
